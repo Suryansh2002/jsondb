@@ -14,6 +14,8 @@ What is this !
 -----------
 This is a silly package , that uses pydantic to store data in different json files
 
+Data Fetched is in pydantic Model , which can be converted to dict using dict()
+
 
 Usage
 ------
@@ -55,6 +57,26 @@ class Test(Template)
 async def main():
     data = await Test.find_one(id = 10)
     print(data) #prints the data
+
+```
+
+### Finding Multiple Data
+
+
+```py
+from jsonsh import Template,Instance
+
+instance = Instance("Data")
+
+@instance.register
+class Test(Template)
+    id:int
+    age:int
+    name:str
+
+async def main():
+    data = await Test.find_many(age = 10) #finding all dict with age as 1
+    print(data) #prints the lists of multiple dicts
 
 ```
 
