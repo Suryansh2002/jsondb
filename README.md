@@ -34,7 +34,7 @@ class Test(Template)
     name:str
 
 async def main():
-    idk = Test(id = 10,age = 13,name = str)
+    idk = Test(id = 10,age = 13,name = "hello")
     await idk.save() #this saves the file in your current working directory
 ```
 
