@@ -7,14 +7,11 @@ setuptools.setup(
 	# Here is the module name.
 	name="jsonsh",
 
-	# version of the module
 	version="0.0.1",
 
-	# Name of Author
 	author="Suryansh Sharma",
 
-	# your Email address
-	author_email="suryanshwins2002@gmail.com",
+	author_email="suryanshforfree@gmail.com",
 
 	long_description=long_description,
 	long_description_content_type="text/markdown",
