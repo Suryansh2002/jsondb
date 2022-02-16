@@ -7,7 +7,7 @@ Installing
 ----------
 
 ```sh
-pip install jsosh
+pip install jsonsh
 ```
 
 What is this !
@@ -21,7 +21,7 @@ Usage
 ### Base Example
 
 ```py
-from jsosh import Template,Instance
+from jsonsh import Template,Instance
 
 instance = Instance("Data") #this is your data folder
 
@@ -42,7 +42,7 @@ There are no advanced queries yet but you can find by id or particular value
 
 
 ```py
-from jsosh import Template,Instance
+from jsonsh import Template,Instance
 
 instance = Instance("Data")
 
@@ -62,7 +62,7 @@ async def main():
 
 ```py
 
-from jsosh import Template,Instance
+from jsonsh import Template,Instance
 
 instance = Instance("Data",cache_state = True,capacity = 100) #this helps you to avoid reading files in finds
 
