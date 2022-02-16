@@ -7,7 +7,7 @@ setuptools.setup(
 	# Here is the module name.
 	name="jsonsh",
 
-	version="0.0.1",
+	version="0.0.3",
 
 	author="Suryansh Sharma",
 

@@ -87,7 +87,7 @@ async def dump(data, fp: TextIOWrapper, indent=None):
 
     if gcache is not None:
         gcache.put(fp.name, data)
-    return await asyncio.to_thread(dumper)
+    return await asyncio.get_running_loop().run_in_executor(dumper)
 
 
 async def load(fp: TextIOWrapper):
@@ -105,7 +105,7 @@ async def load(fp: TextIOWrapper):
         if fromcache is not None:
             return fromcache
 
-    return await asyncio.to_thread(loader)
+    return await asyncio.get_running_loop().run_in_executor(loader)
 
 
 async def open_and_dump(data, file_name, indent=None):
@@ -125,7 +125,7 @@ async def open_and_dump(data, file_name, indent=None):
     if gcache is not None:
         gcache.put(file_name, data)
 
-    return await asyncio.to_thread(dumper)
+    return await asyncio.get_running_loop().run_in_executor(dumper)
 
 
 async def open_and_load(file_name):
@@ -141,6 +141,6 @@ async def open_and_load(file_name):
         if fromcache is not None:
             return fromcache
 
-    return await asyncio.to_thread(loader)
+    return await asyncio.get_running_loop().run_in_executor(loader)
 
 

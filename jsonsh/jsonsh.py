@@ -1,5 +1,5 @@
 import os
-import aiojson
+import jsonsh.aiojson as aiojson
 import asyncio
 from uuid import uuid4
 from pydantic import BaseModel
