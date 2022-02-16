@@ -1,5 +1,4 @@
 # jsonsh
-=======
 
 This sucks and i know it !
 
@@ -7,7 +6,7 @@ Installing
 ----------
 
 ```sh
-pip install jsonsh
+pip install -U jsonsh
 ```
 
 What is this !

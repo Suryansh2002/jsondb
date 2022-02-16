@@ -1,8 +1,8 @@
 import os
-import jsonsh.aiojson as aiojson
 import asyncio
 from uuid import uuid4
 from pydantic import BaseModel
+import jsonsh.aiojson as aiojson
 
 class Instance:
     def __init__(self,folder,*,cache_state = False,cache_capacity = 100):
@@ -48,7 +48,7 @@ class Template(BaseModel):
                 return None
         else:
             try:
-                for file in await asyncio.to_thread(ins.file_list,f"{ins.main_folder}/{cls.__name__}"):
+                for file in await asyncio.get_running_loop().run_in_executor(None,ins.file_list,f"{ins.main_folder}/{cls.__name__}"):
                     data = await aiojson.open_and_load(f"{ins.main_folder}/{cls.__name__}/{file}")
                     if ins.match(details,data):
                         return cls(**data)
@@ -61,7 +61,7 @@ class Template(BaseModel):
         ins = cls.__instance__
         results = []
         try:
-            for file in await asyncio.to_thread(ins.file_list,f"{ins.main_folder}/{cls.__name__}"):
+            for file in await asyncio.get_running_loop().run_in_executor(None,ins.file_list,f"{ins.main_folder}/{cls.__name__}"):
                 data = await aiojson.open_and_load(f"{ins.main_folder}/{cls.__name__}/{file}")
                 if ins.match(details,data):
                     results.append(cls(**data))
