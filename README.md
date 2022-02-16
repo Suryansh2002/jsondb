@@ -28,7 +28,7 @@ from jsonsh import Template,Instance
 instance = Instance("Data") #this is your data folder
 
 @instance.register
-class Test(Template)
+class Test(Template):
     id:int
     age:int
     name:str
@@ -52,7 +52,7 @@ from jsonsh import Template,Instance
 instance = Instance("Data")
 
 @instance.register
-class Test(Template)
+class Test(Template):
     id:int
     age:int
     name:str
@@ -74,7 +74,7 @@ from jsonsh import Template,Instance
 instance = Instance("Data")
 
 @instance.register
-class Test(Template)
+class Test(Template):
     id:int
     age:int
     name:str
