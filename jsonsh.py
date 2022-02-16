@@ -9,6 +9,9 @@ class Instance:
         self.main_folder = folder
         aiojson.setcache(on=cache_state,capacity=cache_capacity)
 
+    def setcache(self,on:bool,capacity:int):
+        aiojson.setcache(on=on,capacity=capacity)
+
     def file_list(self,dir):
         return os.listdir(dir)
 
@@ -68,6 +71,8 @@ class Template(BaseModel):
 
     async def save(self):
         ins = self.__instance__
+        if ins is None:
+            raise NotImplementedError("Instance is not yet registered")
         dic = self.dict()
         if not os.path.exists(f"{ins.main_folder}/{self.__class__.__name__}"):
             os.makedirs(f"{ins.main_folder}/{self.__class__.__name__}",exist_ok=True)
