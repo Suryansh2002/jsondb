@@ -75,7 +75,7 @@ class Test(Template)
     name:str
 
 async def main():
-    data = await Test.find_many(age = 10) #finding all dict with age as 1
+    data = await Test.find_many(age = 10) #finding all dict with age as 10
     print(data) #prints the lists of multiple dicts
 
 ```
