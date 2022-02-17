@@ -25,7 +25,7 @@ Usage
 
 ### Base Example 
 
-Note a if you try to enter a duplicate key , it will raise DuplicateIDError
+Note, if you try to enter a duplicate Id , it will raise DuplicateIDError
 
 ```py
 import asyncio
