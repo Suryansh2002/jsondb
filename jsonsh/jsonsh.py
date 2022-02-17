@@ -195,9 +195,8 @@ class Template(BaseModel):
             for file in self.__cached_file_list__:
                 arr = file.strip('.json').split("-")
                 try:
-                    for value,index in zip(arr,indexes):
-                        if str(dic[index]) != value:
-                            raise DuplicateIDError('Found an file with same id !')
+                    if arr[0] == str(id):
+                        await self.delete_one(id=id)
                 except IndexError:
                     pass
         
