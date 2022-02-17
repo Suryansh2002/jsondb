@@ -1,6 +1,9 @@
 # jsonsh
 
-This sucks and i know it !
+Disclaimer : This is quite slow for bunch inserts, 
+Taking upto 0.0077 second for 1 file insert when 10000 files were inserted one by one
+
+Note: I did the test on my laptop , which has i5-3337u
 
 Installing
 ----------
@@ -11,15 +14,18 @@ pip install -U jsonsh
 
 What is this !
 -----------
-This is a silly package , that uses pydantic to store data in different json files
+This is a silly package , that uses pydantic to store data in different json files.
 
-Data Fetched is in pydantic Model , which can be converted to dict using dict()
+Data Fetched is in pydantic Model , which can be converted to dict using dict().
 
+All examples below have data returned as a Pydantic Model !
 
 Usage
 ------
 
-### Base Example
+### Base Example 
+
+Note a if you try to enter a duplicate key , it will raise DuplicateIDError
 
 ```py
 import asyncio
@@ -28,7 +34,7 @@ from jsonsh import Template,Instance
 instance = Instance("Data") #this is your data folder
 
 @instance.register
-class Test(Template)
+class Test(Template):
     id:int
     age:int
     name:str
@@ -52,7 +58,7 @@ from jsonsh import Template,Instance
 instance = Instance("Data")
 
 @instance.register
-class Test(Template)
+class Test(Template):
     id:int
     age:int
     name:str
@@ -74,13 +80,68 @@ from jsonsh import Template,Instance
 instance = Instance("Data")
 
 @instance.register
-class Test(Template)
+class Test(Template):
     id:int
     age:int
     name:str
 
 async def main():
     data = await Test.find_many(age = 10) #finding all dict with age as 10
+    print(data) #prints the lists of multiple dicts
+
+asyncio.run(main())
+```
+
+## Using Indexing 
+
+```py
+import asyncio
+from jsonsh import Template,Instance
+
+instance = Instance("Data")
+
+@instance.register
+class Test(Template):
+    id:int
+    age:int
+    name:str
+
+    class Meta:
+        indexes = ["age","name"] 
+    """
+    this makes finding by age and name faster
+    """
+
+async def main():
+    data = await Test.find_many(age = 10) #finding all dict with age as 10
+    print(data) #prints the lists of multiple dicts
+
+asyncio.run(main())
+```
+
+## Deleting files / entries
+
+```py
+import asyncio
+from jsonsh import Template,Instance
+
+instance = Instance("Data")
+
+@instance.register
+class Test(Template):
+    id:int
+    age:int
+    name:str
+
+    class Meta:
+        indexes = ["age","name"] 
+    """
+    this makes finding by age and name faster
+    """
+
+async def main():
+    data = await Test.delete_one(age = 10) #deleting a file entry with age as 10
+    data = await Test.delete_one(id = 10) #deleting a file entry with id as 10
     print(data) #prints the lists of multiple dicts
 
 asyncio.run(main())

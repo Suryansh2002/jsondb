@@ -1,8 +1,8 @@
-import orjson
 import ujson
+import orjson
 import asyncio
-from io import TextIOWrapper
 from threading import Lock
+from io import TextIOWrapper
 from collections import OrderedDict
 
 
@@ -105,7 +105,11 @@ async def load(fp: TextIOWrapper):
         if fromcache is not None:
             return fromcache
 
-    return await asyncio.get_running_loop().run_in_executor(None,loader)
+    data = await asyncio.get_running_loop().run_in_executor(None,loader)
+    if gcache is not None:
+        gcache.put(fp.name,data)
+    
+    return data
 
 
 async def open_and_dump(data, file_name, indent=None):
@@ -141,4 +145,8 @@ async def open_and_load(file_name):
         if fromcache is not None:
             return fromcache
 
-    return await asyncio.get_running_loop().run_in_executor(None,loader)
+    data = await asyncio.get_running_loop().run_in_executor(None,loader)
+    if gcache is not None:
+        gcache.put(file_name,data)
+
+    return data
