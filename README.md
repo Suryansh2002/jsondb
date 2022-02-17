@@ -25,7 +25,6 @@ Usage
 
 ### Base Example 
 
-Note, if you try to enter a duplicate Id , it will raise DuplicateIDError
 
 ```py
 import asyncio
