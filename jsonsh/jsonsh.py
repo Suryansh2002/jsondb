@@ -170,6 +170,7 @@ class Template(BaseModel):
         except:
             return 0
         return 1
+        
     async def save(self):
         ins = self.__instance__
         
