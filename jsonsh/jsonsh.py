@@ -7,10 +7,6 @@ from pydantic import BaseModel
 import jsonsh.aiojson as aiojson
 
 
-class DuplicateIDError(Exception):
-    pass
-
-
 class Instance:
     def __init__(self,folder,*,cache_state = False,cache_capacity = 100):
         self.main_folder = folder
@@ -75,7 +71,7 @@ class Instance:
         
 
 class Template(BaseModel):
-    __instance__:Instance = None
+    __instance__ = None
     __cached_file_list__ = None
 
     @classmethod
@@ -186,7 +182,7 @@ class Template(BaseModel):
 
         indexes = ins.get_indexes(self)
 
-        file_name = f"{'-'.join([str(dic[i]) for i in indexes])}"
+        file_name = '-'.join([str(dic[i]) for i in indexes])
 
         if self.__class__.__cached_file_list__ is None:
             self.__class__.__cached_file_list__ = await ins.file_list(f"{ins.main_folder}/{self.__class__.__name__}")
@@ -194,6 +190,8 @@ class Template(BaseModel):
         if self.__class__.__cached_file_list__:
             for file in self.__cached_file_list__:
                 arr = file.strip('.json').split("-")
+                if len(arr) == 1 and len(indexes) == 1:
+                    continue
                 try:
                     if arr[0] == str(id):
                         await self.delete_one(id=id)
