@@ -1,3 +1,4 @@
+import os
 import setuptools
 
 with open("README.md", "r") as fh:
@@ -7,7 +8,7 @@ setuptools.setup(
 	# Here is the module name.
 	name="jsonsh",
 
-	version="0.1.2",
+	version="0.1.3",
 
 	author="Suryansh Sharma",
 
@@ -21,8 +22,8 @@ setuptools.setup(
 	install_requires=[
         "orjson",
         "ujson",
-        "pydantic"
-    ],
+        "pydantic",
+    ]+(["uvloop"] if os.name!='nt' else []),
 
 
 	license="MIT",

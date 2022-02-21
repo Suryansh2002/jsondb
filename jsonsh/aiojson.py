@@ -4,6 +4,11 @@ import asyncio
 from threading import Lock
 from io import TextIOWrapper
 from collections import OrderedDict
+try:
+    import uvloop
+    uvloop.install()
+except ModuleNotFoundError:
+    pass
 
 
 class LruDict:
@@ -94,10 +99,7 @@ async def load(fp: TextIOWrapper):
     if not isinstance(fp, TextIOWrapper):
         raise ValueError("FP should be an instance of TextIOWrapper")
 
-    lock = get_lock(fp.name)
-
     def loader():
-        with lock:
             return orjson.loads(fp.read())
 
     if gcache is not None:
@@ -133,12 +135,10 @@ async def open_and_dump(data, file_name, indent=None):
 
 
 async def open_and_load(file_name):
-    lock = get_lock(file_name)
 
     def loader():
-        with lock:
-            with open(file_name, "r") as f:
-                return orjson.loads(f.read())
+        with open(file_name, "r") as f:
+            return orjson.loads(f.read())
 
     if gcache is not None:
         fromcache = gcache.get(file_name)
