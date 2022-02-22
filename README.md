@@ -12,6 +12,11 @@ Installing
 pip install -U jsonsh
 ```
 
+if you are on Unix-like system, The performace can be increased by installing uvloop !
+```sh
+pip install -U uvloop
+```
+
 What is this !
 -----------
 This is a silly package , that uses pydantic to store data in different json files.

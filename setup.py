@@ -23,7 +23,7 @@ setuptools.setup(
         "orjson",
         "ujson",
         "pydantic",
-    ]+(["uvloop"] if os.name!='nt' else []),
+    ],
 
 
 	license="MIT",
