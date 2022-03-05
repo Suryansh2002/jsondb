@@ -69,7 +69,9 @@ class Test(Template):
 
 async def main():
     data = await Test.find_one(id = 10)
-    print(data) #prints the data
+    print(data) #prints the data we found
+    data.name = "Unknown" #changing name
+    await data.save() #updating data
 
 asyncio.run(main())
 ```
