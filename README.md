@@ -50,7 +50,7 @@ async def main():
 asyncio.run(main())
 ```
 
-### Finding Data
+### Finding and Updating Data
 
 There are no advanced queries yet but you can find by id or particular value
 
