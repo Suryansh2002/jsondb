@@ -50,7 +50,7 @@ async def main():
 asyncio.run(main())
 ```
 
-### Finding Data
+### Finding and Updating Data
 
 There are no advanced queries yet but you can find by id or particular value
 
@@ -69,7 +69,9 @@ class Test(Template):
 
 async def main():
     data = await Test.find_one(id = 10)
-    print(data) #prints the data
+    print(data) #prints the data we found
+    data.name = "Unknown" #changing name
+    await data.save() #updating data
 
 asyncio.run(main())
 ```
