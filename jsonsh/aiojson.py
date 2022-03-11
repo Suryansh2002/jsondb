@@ -5,9 +5,11 @@ from threading import Lock
 from io import TextIOWrapper
 from os import name as os_name
 from collections import OrderedDict
+
 try:
-    if os_name!="nt":
+    if os_name != "nt":
         import uvloop
+
         uvloop.install()
 except ModuleNotFoundError:
     pass
@@ -47,7 +49,7 @@ gcache: LruDict = None
 files = {}
 
 
-def setcache(*,on=False, capacity=100):
+def setcache(*, on=False, capacity=100):
     global gcache
     if on:
         if gcache is None:
@@ -70,13 +72,14 @@ def get_lock(file_name):
         files[file_name] = lock
     return lock
 
+
 def dumps(data):
     return orjson.dumps(data)
-    
+
 
 def loads(data):
     return orjson.loads(data)
-    
+
 
 async def dump(data, fp: TextIOWrapper, indent=None):
     if not isinstance(fp, TextIOWrapper):
@@ -94,7 +97,7 @@ async def dump(data, fp: TextIOWrapper, indent=None):
 
     if gcache is not None:
         gcache.put(fp.name, data)
-    return await asyncio.get_running_loop().run_in_executor(None,dumper)
+    return await asyncio.get_running_loop().run_in_executor(None, dumper)
 
 
 async def load(fp: TextIOWrapper):
@@ -112,10 +115,10 @@ async def load(fp: TextIOWrapper):
         if fromcache is not None:
             return fromcache
 
-    data = await asyncio.get_running_loop().run_in_executor(None,loader)
+    data = await asyncio.get_running_loop().run_in_executor(None, loader)
     if gcache is not None:
-        gcache.put(fp.name,data)
-    
+        gcache.put(fp.name, data)
+
     return data
 
 
@@ -136,11 +139,11 @@ async def open_and_dump(data, file_name, indent=None):
     if gcache is not None:
         gcache.put(file_name, data)
 
-    return await asyncio.get_running_loop().run_in_executor(None,dumper)
+    return await asyncio.get_running_loop().run_in_executor(None, dumper)
 
 
 async def open_and_load(file_name):
-    
+
     lock = get_lock(file_name)
 
     def loader():
@@ -153,8 +156,8 @@ async def open_and_load(file_name):
         if fromcache is not None:
             return fromcache
 
-    data = await asyncio.get_running_loop().run_in_executor(None,loader)
+    data = await asyncio.get_running_loop().run_in_executor(None, loader)
     if gcache is not None:
-        gcache.put(file_name,data)
+        gcache.put(file_name, data)
 
     return data
