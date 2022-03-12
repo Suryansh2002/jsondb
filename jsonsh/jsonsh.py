@@ -77,6 +77,13 @@ class Template(BaseModel):
     @classmethod
     async def find_one(cls, get_with_file=False, **details: str):
         ins = cls.__instance__
+
+        if ins is None:
+            raise NotImplementedError("Instance is not yet registered")
+
+        if not isinstance(get_with_file, bool):
+            raise TypeError("get_with_file must be of type bool")
+
         if cls.__cached_file_list__ is None:
             cls.__cached_file_list__ = await ins.file_list(
                 f"{ins.main_folder}/{cls.__name__}"
@@ -85,9 +92,6 @@ class Template(BaseModel):
             if get_with_file:
                 return None, None
             return None
-
-        if ins is None:
-            raise NotImplementedError("Instance is not yet registered")
 
         found, idx, index = ins.get_index_data(cls, details)
         if found:
@@ -122,6 +126,9 @@ class Template(BaseModel):
     @classmethod
     async def find_many(cls, deep_search: bool = False, **details: str):
         ins = cls.__instance__
+        if ins is None:
+            raise NotImplementedError("Instance is not yet registered")
+
         if cls.__cached_file_list__ is None:
             cls.__cached_file_list__ = await ins.file_list(
                 f"{ins.main_folder}/{cls.__name__}"
@@ -166,6 +173,10 @@ class Template(BaseModel):
 
     @classmethod
     async def delete_one(cls, **details):
+        ins = cls.__instance__
+        if ins is None:
+            raise NotImplementedError("Instance is not yet registered")
+            
         file, _ = await cls.find_one(True, **details)
         if file is None:
             return 1
