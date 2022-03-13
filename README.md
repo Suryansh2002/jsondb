@@ -1,7 +1,9 @@
 # jsonsh
 
 Disclaimer : This is slow.. 
+
 Taking upto 0.01 second for 1 file insert when 10000 files were inserted one by one
+
 Taking 0.0028 second for 1 files read when 10000 files were read
 
 Note: I did the test on my laptop , which has i5-3337u
